@@ -1,0 +1,108 @@
+{
+    "interactionModel": {
+        "languageModel": {
+            "invocationName": "絵日記",
+            "intents": [
+                {
+                    "name": "AMAZON.CancelIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.HelpIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.StopIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.NavigateHomeIntent",
+                    "samples": []
+                },
+                {
+                    "name": "PaguIntent",
+                    "slots": [],
+                    "samples": [
+                        "pagu"
+                    ]
+                },
+                {
+                    "name": "HogeIntent",
+                    "slots": [],
+                    "samples": [
+                        "hoge"
+                    ]
+                },
+                {
+                    "name": "BreadIntent",
+                    "slots": [
+                        {
+                            "name": "food",
+                            "type": "AMAZON.SearchQuery",
+                            "samples": [
+                                "{food}"
+                            ]
+                        }
+                    ],
+                    "samples": [
+                        "絵日記書きたい"
+                    ]
+                }
+            ],
+            "types": []
+        },
+        "dialog": {
+            "intents": [
+                {
+                    "name": "BreadIntent",
+                    "delegationStrategy": "ALWAYS",
+                    "confirmationRequired": true,
+                    "prompts": {
+                        "confirmation": "Confirm.Intent.1409210114098"
+                    },
+                    "slots": [
+                        {
+                            "name": "food",
+                            "type": "AMAZON.SearchQuery",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.903210950336.1265161426175"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "delegationStrategy": "ALWAYS"
+        },
+        "prompts": [
+            {
+                "id": "Confirm.Intent.903210950336",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "今日なにしたのred?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.903210950336.1265161426175",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "今日なにしたのred?"
+                    }
+                ]
+            },
+            {
+                "id": "Confirm.Intent.1409210114098",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "{food} んですねred?"
+                    }
+                ]
+            }
+        ]
+    }
+}

@@ -10,7 +10,7 @@ const LaunchRequestHandler = {
         return Alexa.getRequestType(handlerInput.requestEnvelope) === 'LaunchRequest';
     },
     handle(handlerInput) {
-        const speakOutput = '今日なにしたのred?';
+        const speakOutput = '絵日記を起動しましたred';
 
         return handlerInput.responseBuilder
             .speak(speakOutput)
@@ -19,16 +19,97 @@ const LaunchRequestHandler = {
     }
 };
 
-const HelloWorldIntentHandler = {
+const PaguIntentHandler = {
     canHandle(handlerInput) {
         return Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest'
-            && Alexa.getIntentName(handlerInput.requestEnvelope) === 'HelloWorldIntent';
+            && Alexa.getIntentName(handlerInput.requestEnvelope) === 'PaguIntent';
     },
     handle(handlerInput) {
-        const speakOutput = 'Hello World!';
+        const speakOutput = 'pagupagu';
 
         return handlerInput.responseBuilder
             .speak(speakOutput)
+            .reprompt(speakOutput)
+            //.reprompt('add a reprompt if you want to keep the session open for the user to respond')
+            .getResponse();
+    }
+};
+
+
+const HogeIntentHandler = {
+    canHandle(handlerInput) {
+        return Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest'
+            && Alexa.getIntentName(handlerInput.requestEnvelope) === 'HogeIntent';
+    },
+    handle(handlerInput) {
+        const speakOutput = 'hogehoge';
+
+        return handlerInput.responseBuilder
+            .speak(speakOutput)
+            .reprompt(speakOutput)
+            //.reprompt('add a reprompt if you want to keep the session open for the user to respond')
+            .getResponse();
+    }
+};
+
+const BreadIntentHandler = {
+    canHandle(handlerInput) {
+        return Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest'
+            && Alexa.getIntentName(handlerInput.requestEnvelope) === 'BreadIntent';
+    },
+    handle(handlerInput) {
+        // const speakOutput = 'それは楽しそうですねred';
+        const speakOutput = handlerInput.requestEnvelope.request.intent.slots.food.value
+        
+        // var request = require("request")
+
+        // var options = {
+        //     host:"http://20.89.138.142:5000?userid=abcdef&prompt=べた書き",
+        //     // host:"http://google.com//",
+        //     method:"GET",
+        //     path:"/"
+        //     // query:'userid=abcdef&prompt=${speakOutput}'
+        // }
+        
+        // request(options,function(error,response,body){
+        //     console.log(body)
+        // })
+        
+ 
+        
+        // let url = "https://watnow.azurewebsites.net/?userid=abcdef&prompt="
+        // url = url + speakOutput
+        // url = encodeURI(url)
+        
+        // new XMLHttpRequest()
+        
+        var http = require("http")
+
+
+
+        var data = [];
+
+        let url = "http://20.89.44.230:1323?userid=abcdef&prompt="
+        url = url + speakOutput
+        
+         
+        http.get(url, function (res) {
+          res.on('data', function(chunk) {
+         
+              data.push(chunk);
+         
+          }).on('end', function() {
+         
+              var events   = Buffer.concat(data);
+              
+              console.log(events);
+         
+          });
+        });
+                
+        return handlerInput.responseBuilder
+            .speak(speakOutput)
+            .reprompt(speakOutput)
             //.reprompt('add a reprompt if you want to keep the session open for the user to respond')
             .getResponse();
     }
@@ -144,7 +225,9 @@ const ErrorHandler = {
 exports.handler = Alexa.SkillBuilders.custom()
     .addRequestHandlers(
         LaunchRequestHandler,
-        HelloWorldIntentHandler,
+        PaguIntentHandler,
+        HogeIntentHandler,
+        BreadIntentHandler,
         HelpIntentHandler,
         CancelAndStopIntentHandler,
         FallbackIntentHandler,
